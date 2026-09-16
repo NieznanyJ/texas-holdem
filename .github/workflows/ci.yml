@@ -13,7 +13,6 @@ jobs:
         defaults:
             run:
                 working-directory: backend
-
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -63,3 +62,43 @@ jobs:
 
             - name: Build
               run: npm run build
+
+    e2e:
+        needs:
+            - backend
+            - frontend
+
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+
+        defaults:
+            run:
+                working-directory: e2e
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: npm
+                  cache-dependency-path: e2e/package-lock.json
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Install Playwright browsers
+              run: npx playwright install --with-deps
+
+            - name: Run E2E tests
+              run: npm test
+
+            - name: Upload Playwright report
+              if: ${{ !cancelled() }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report
+                  path: e2e/playwright-report/
+                  retention-days: 30

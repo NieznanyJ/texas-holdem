@@ -155,7 +155,7 @@ function RoomPage() {
         <Muted>{room.players.filter(p => p.chips > 0).length < 2
           ? 'At least two players with chips are needed.'
           : room.ownerId === userId ? 'Your table is ready. Start when everyone is here.'
-          : 'Waiting for the owner to start the hand.'}</Muted>
+            : 'Waiting for the owner to start the hand.'}</Muted>
         {room.ownerId === userId && <Button type="button" onClick={startHand}
           disabled={!canStart || isStarting}>{isStarting ? 'Starting...' : 'Start hand'}</Button>}
       </Panel>}
@@ -174,13 +174,13 @@ function RoomPage() {
             {player.seat === room.currentPlayerSeat && <Badge>{player.userId === userId ? 'Your turn' : 'To act'}</Badge>}
             <p>Chips: <strong>{player.chips}</strong> · Bet: {player.roundBet}</p>
             <Muted>{[player.seat === room.dealerSeat && 'Dealer',
-              player.seat === room.smallBlindSeat && 'Small blind',
-              player.seat === room.bigBlindSeat && 'Big blind',
-              player.folded && 'Folded', player.allIn && 'All-in',
-              !player.inHand && (room.phase === 'waiting' ? 'Waiting' : 'Sitting out')].filter(Boolean).join(' · ')}</Muted>
+            player.seat === room.smallBlindSeat && 'Small blind',
+            player.seat === room.bigBlindSeat && 'Big blind',
+            player.folded && 'Folded', player.allIn && 'All-in',
+            !player.inHand && (room.phase === 'waiting' ? 'Waiting' : 'Sitting out')].filter(Boolean).join(' · ')}</Muted>
             <Cards>{player.cardCount === 0 ? <Muted>Cards not dealt</Muted>
               : player.hand === null
-                ? Array.from({length: player.cardCount}, (_, index) => <Card key={index} hidden />)
+                ? Array.from({ length: player.cardCount }, (_, index) => <Card key={index} hidden />)
                 : player.hand.map(card => <Card key={card.rank + card.suit} card={card} />)}</Cards>
           </Seat>)}
         </Players>

@@ -113,8 +113,8 @@ function RoomForm({ mode, onSubmit, disabled = false }: RoomFormProps) {
     }
 
     return (
-        <Form onSubmit={handleSubmit} aria-labelledby={id + '-title'} aria-busy={isSubmitting}>
-            <Title id={id + '-title'}>{isCreate ? 'Utwórz pokój' : 'Dołącz do pokoju'}</Title>
+        <Form onSubmit={handleSubmit} aria-labelledby={id + '-title'} data-testid={isCreate ? 'create-room-form' : 'join-room-form'} >
+            <Title id={id + '-title'}>{isCreate ? 'Create a room' : 'Join a room'}</Title>
             <Description>
                 {isCreate ? 'Name your room and invite friends.' : 'Enter room id .'}
             </Description>
