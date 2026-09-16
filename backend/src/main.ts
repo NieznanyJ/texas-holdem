@@ -1,7 +1,10 @@
 import { NestFactory } from '@nestjs/core';
+import { existsSync } from 'node:fs';
 import { loadEnvFile } from 'node:process';
 
-loadEnvFile();
+if (existsSync('.env')) {
+  loadEnvFile();
+}
 
 async function bootstrap() {
   const { AppModule } = await import('./app.module.js');
