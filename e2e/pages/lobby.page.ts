@@ -16,7 +16,7 @@ class LobbyPage {
     }
 
     async goto() {
-        this.page.goto("/");
+        await this.page.goto("/");
     }
 
     getLobbyForm(formType: "create" | "join"): Locator {

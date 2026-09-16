@@ -40,7 +40,7 @@ When(
         const lobby = pageFactory(LobbyPage, playerTwo);
         const room = pageFactory(RoomPage, playerTwo);
 
-        const responsePromise = waitForSocketIoAck<{ roomId: string }>(
+        const responsePromise = waitForSocketIoAck<{ success: boolean }>(
             playerTwo,
             "room:join",
         );
@@ -51,5 +51,8 @@ When(
 
         await lobby.joinRoom(roomId);
         await expect(room.title).toHaveText("Poker Room");
+
+        const success = await responsePromise;
+        expect(success).toBeTruthy();
     },
 );

@@ -15,10 +15,11 @@ const rankNames: Record<CardState['rank'], string> = {
 
 type CardProps = {
   className?: string;
+  testId?: string,
 } & (
-  | { card: CardState; hidden?: false }
-  | { hidden: true; card?: never }
-);
+    | { card: CardState; hidden?: false }
+    | { hidden: true; card?: never }
+  );
 
 const Face = styled.img`
   display: block;
@@ -53,6 +54,7 @@ export default function Card(props: CardProps) {
 
   return (
     <Face
+      data-testid={props.testId}
       className={className}
       src={src}
       alt={`${name} of ${card.suit}`}

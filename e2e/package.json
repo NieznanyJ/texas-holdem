@@ -1,4 +1,5 @@
 {
+    "@texas-holdem/shared": "1.0.0",
     "name": "e2e",
     "version": "1.0.0",
     "description": "Playwright e2e tests",

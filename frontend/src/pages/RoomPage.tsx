@@ -162,7 +162,7 @@ function RoomPage() {
       <Panel>
         <h2>Community cards</h2>
         {room.communityCards.length === 0 ? <Muted>No cards on the board yet.</Muted>
-          : <Cards>{room.communityCards.map(card => <Card key={card.rank + card.suit} card={card} />)}</Cards>}
+          : <Cards >{room.communityCards.map(card => <Card testId='card' key={card.rank + card.suit} card={card} />)}</Cards>}
       </Panel>
       <GameActions key={room.id + room.handNumber + room.phase + room.currentPlayerSeat} game={room} userId={userId} connected={connected} />
       <section aria-labelledby="players-heading">
@@ -181,7 +181,7 @@ function RoomPage() {
             <Cards>{player.cardCount === 0 ? <Muted>Cards not dealt</Muted>
               : player.hand === null
                 ? Array.from({ length: player.cardCount }, (_, index) => <Card key={index} hidden />)
-                : player.hand.map(card => <Card key={card.rank + card.suit} card={card} />)}</Cards>
+                : player.hand.map(card => <Card testId='card' key={card.rank + card.suit} card={card} />)}</Cards>
           </Seat>)}
         </Players>
       </section>

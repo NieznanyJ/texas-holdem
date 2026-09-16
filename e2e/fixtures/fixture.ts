@@ -1,3 +1,4 @@
+import { trackSocketIo } from "../lib/utils";
 import { Browser, Page } from "@playwright/test";
 import { test as base, createBdd } from "playwright-bdd";
 
@@ -19,10 +20,13 @@ const createNewPlayerBrowserContext = async (
 ) => {
     const context = await browser.newContext();
     const page = await context.newPage();
+    trackSocketIo(page);
 
-    await use(page);
-
-    await context.close();
+    try {
+        await use(page);
+    } finally {
+        await context.close();
+    }
 };
 type PageObjectConstructor<T> = new (page: Page) => T;
 

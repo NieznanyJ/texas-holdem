@@ -61,7 +61,7 @@ export interface GameState {
     bigBlind: number;
     currentBet: number;
     minRaise: number;
-  canRaise: boolean;
+    canRaise: boolean;
     pot: number;
     communityCards: CardState[];
     players: PlayerState[];
