@@ -1,0 +1,17 @@
+import { Route, Routes } from 'react-router-dom'
+import LobbyPage from './pages/LobbyPage'
+import RoomPage from './pages/RoomPage'
+
+
+function App() {
+
+  return (
+    <Routes>
+
+      <Route index element={<LobbyPage />} />
+      <Route path={'/room/:roomId'} element={<RoomPage />} />
+    </Routes>
+  )
+}
+
+export default App
