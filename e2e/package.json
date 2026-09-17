@@ -1,0 +1,25 @@
+{
+    "name": "e2e",
+    "version": "1.0.0",
+    "description": "Playwright e2e tests",
+    "license": "ISC",
+    "author": "",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+        "test": "bddgen && playwright test",
+        "test:ui": "bddgen && playwright test --ui",
+        "test:headed": "bddgen && playwright test --headed",
+        "test:debug": "bddgen && playwright test --debug",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.63.0",
+        "@types/node": "^22.20.3",
+        "playwright-bdd": "^9.2.1",
+        "typescript": "~6.0.2"
+    },
+    "dependencies": {
+        "@texas-holdem/shared": "1.0.0"
+    }
+}

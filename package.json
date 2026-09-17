@@ -1,0 +1,10 @@
+{
+    "name": "texas-holdem",
+    "private": true,
+    "workspaces": [
+        "backend",
+        "frontend",
+        "e2e",
+        "shared"
+    ]
+}

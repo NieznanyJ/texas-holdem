@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { socket } from '../lib/socket';
-import type { RoomState } from '../game/models/game-state';
+import type { RoomState } from '@texas-holdem/shared';
 
 const Panel = styled.section`
   display: grid; gap: 16px; padding: 24px; border: 1px solid #d4af37;
@@ -67,8 +67,8 @@ export default function GameActions({ game, userId, connected }: {
       {toCall === 0
         ? <Button disabled={disabled} onClick={() => void act('game:check')}>Check</Button>
         : <Button disabled={disabled} onClick={() => void act('game:call')}>
-            Call {Math.min(toCall, player.chips)}{toCall >= player.chips ? ' (all-in)' : ''}
-          </Button>}
+          Call {Math.min(toCall, player.chips)}{toCall >= player.chips ? ' (all-in)' : ''}
+        </Button>}
     </Row>
     {canIncrease && <Row>
       <Label>{game.currentBet === 0 ? 'Bet amount' : 'Raise to'}

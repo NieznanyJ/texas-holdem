@@ -26,9 +26,10 @@ export class RoomGateway implements OnGatewayDisconnect {
   @SubscribeMessage('room:create')
   createRoom(@MessageBody() data: { name: string; userId: string }): {
     roomId: string;
+    ownerId: string;
   } {
     const room = this.roomService.createRoom(data.userId, data.name, 5, 10);
-    return { roomId: room.id };
+    return { roomId: room.id, ownerId: data.userId };
   }
 
   @SubscribeMessage('room:join')
@@ -50,7 +51,9 @@ export class RoomGateway implements OnGatewayDisconnect {
   }
 
   @SubscribeMessage('room:state')
-  getState(@ConnectedSocket() client: Socket): GameState & { ownerId: string; viewerId: string } {
+  getState(
+    @ConnectedSocket() client: Socket,
+  ): GameState & { ownerId: string; viewerId: string } {
     const connection = this.getConnection(client);
 
     return this.roomService.getState(connection.roomId, connection.userId);
@@ -65,18 +68,33 @@ export class RoomGateway implements OnGatewayDisconnect {
   }
 
   @SubscribeMessage('game:fold')
-  fold(@ConnectedSocket() client: Socket): { success: boolean; error?: string } {
-    return this.performAction(client, (roomId, userId) => this.roomService.fold(roomId, userId));
+  fold(@ConnectedSocket() client: Socket): {
+    success: boolean;
+    error?: string;
+  } {
+    return this.performAction(client, (roomId, userId) =>
+      this.roomService.fold(roomId, userId),
+    );
   }
 
   @SubscribeMessage('game:check')
-  check(@ConnectedSocket() client: Socket): { success: boolean; error?: string } {
-    return this.performAction(client, (roomId, userId) => this.roomService.check(roomId, userId));
+  check(@ConnectedSocket() client: Socket): {
+    success: boolean;
+    error?: string;
+  } {
+    return this.performAction(client, (roomId, userId) =>
+      this.roomService.check(roomId, userId),
+    );
   }
 
   @SubscribeMessage('game:call')
-  call(@ConnectedSocket() client: Socket): { success: boolean; error?: string } {
-    return this.performAction(client, (roomId, userId) => this.roomService.call(roomId, userId));
+  call(@ConnectedSocket() client: Socket): {
+    success: boolean;
+    error?: string;
+  } {
+    return this.performAction(client, (roomId, userId) =>
+      this.roomService.call(roomId, userId),
+    );
   }
 
   @SubscribeMessage('game:bet')
@@ -84,7 +102,9 @@ export class RoomGateway implements OnGatewayDisconnect {
     @ConnectedSocket() client: Socket,
     @MessageBody() data: { amount: number },
   ): { success: boolean; error?: string } {
-    return this.performAction(client, (roomId, userId) => this.roomService.bet(roomId, userId, data?.amount));
+    return this.performAction(client, (roomId, userId) =>
+      this.roomService.bet(roomId, userId, data?.amount),
+    );
   }
 
   @SubscribeMessage('game:raise')
@@ -92,17 +112,25 @@ export class RoomGateway implements OnGatewayDisconnect {
     @ConnectedSocket() client: Socket,
     @MessageBody() data: { amount: number },
   ): { success: boolean; error?: string } {
-    return this.performAction(client, (roomId, userId) => this.roomService.raise(roomId, userId, data?.amount));
+    return this.performAction(client, (roomId, userId) =>
+      this.roomService.raise(roomId, userId, data?.amount),
+    );
   }
 
-  private performAction(client: Socket, action: (roomId: string, userId: string) => void): { success: boolean; error?: string } {
+  private performAction(
+    client: Socket,
+    action: (roomId: string, userId: string) => void,
+  ): { success: boolean; error?: string } {
     try {
       const connection = this.getConnection(client);
       action(connection.roomId, connection.userId);
       this.sendRoomState(connection.roomId);
       return { success: true };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Action failed' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Action failed',
+      };
     }
   }
 
