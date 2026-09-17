@@ -18,3 +18,7 @@ Validation completed locally:
 - npm run build --workspace backend and --workspace frontend: passed.
 - Fixed two stale frontend shared-type imports and the NodeNext supertest type import uncovered by these checks.
 - GitHub-hosted Linux execution has not been verified; browser E2E execution is deferred to the next stage. Browser scenario changes are deferred. CD is not configured: hosting target and credentials are not yet selected.
+
+## Linux CI lint installation fix
+
+The runner failed because the lockfile contained only the Windows x64 optional tsgolint package. Added the five missing platform entries using npm-generated registry metadata for the same 7.0.2001 version. Existing dependency versions are unchanged. Verified a clean isolated npm ci --ignore-scripts --os=linux --cpu=x64 installation and presence of the linux-x64/tsgolint binary. Linux binary execution still requires the GitHub runner; Windows installation alone is not sufficient validation.
