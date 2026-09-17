@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import type { CardState } from '../game/models/game-state';
+import type { CardState } from '@texas-holdem/shared';
 
 const images = import.meta.glob<string>('../assets/cards/*.svg', {
   eager: true,

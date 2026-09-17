@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { socket } from '../lib/socket';
-import type { RoomState } from '../game/models/game-state';
+import type { RoomState } from '@texas-holdem/shared';
 
 const Page = styled.main`
   min-height: 100svh; box-sizing: border-box; padding: clamp(20px, 4vw, 48px);

@@ -8,10 +8,14 @@ const testDir = defineBddConfig({
 
 export default defineConfig({
     testDir,
+    forbidOnly: !!process.env.CI,
+    workers: process.env.CI ? 1 : undefined,
+    reporter: [["list"], ["html", { open: "never" }]],
 
     use: {
         baseURL: process.env.BASE_URL_FRONTEND ?? "http://localhost:5173",
-        trace: "on-first-retry",
+        trace: "retain-on-failure",
+        screenshot: "only-on-failure",
     },
 
     projects: [
